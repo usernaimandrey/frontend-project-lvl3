@@ -1,0 +1,36 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "rcc channel aggregator",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usernaimandrey/frontend-project-lvl3.git"
+  },
+  "keywords": [
+    "hexlet",
+    "project",
+    "rss"
+  ],
+  "author": "Andrey Shlyapnikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/usernaimandrey/frontend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/usernaimandrey/frontend-project-lvl3#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
+    "babel-jest": "^27.2.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0"
+  }
+}
