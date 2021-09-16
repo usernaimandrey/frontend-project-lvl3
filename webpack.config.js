@@ -1,14 +1,7 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
 module.exports = {
-  mode: NODE_ENV,
-  entry: './src/index.js',
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
+  mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [
       {
@@ -38,6 +31,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'RSS агрегатор',
       template: 'index.html',
     }),
   ],
