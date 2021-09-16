@@ -1,0 +1,35 @@
+.ui {
+    background-color: darkslategrey;
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rss-form {
+    display: flex;
+    flex-direction: row;
+    width: 150%;
+}
+
+.content {
+    max-height: 100%;
+}
+
+.form-control {
+    height: 75px;
+}
+
+.btn-primary {
+    height: 75px;
+    width: 100px;
+    margin-left: 20px;
+
+    flex-grow: 2;
+}
+
+.input {
+    flex-grow: 1;
+}
