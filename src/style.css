@@ -1,35 +1,50 @@
-.ui {
-    background-color: darkslategrey;
-}
+:root {
+    --black: #212529;
+    --White: #fff;
+    --grey: #6c757d;
+  }
 
-.container-fluid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+  .rss-section {
+      background: var(--black);
+  }
 
-.rss-form {
-    display: flex;
-    flex-direction: row;
-    width: 150%;
-}
+  .content-text {
+      color: var(--White);
+  }
 
-.content {
-    max-height: 100%;
-}
+  .example {
+      color: var(--grey);
+  }
 
-.form-control {
-    height: 75px;
-}
-
-.btn-primary {
-    height: 75px;
-    width: 100px;
-    margin-left: 20px;
-
-    flex-grow: 2;
-}
-
-.input {
+  .input {
     flex-grow: 1;
-}
+    width: 500%;
+  }
+  
+  .button {
+      margin-left: 10px;
+      flex-grow: 2;
+  }
+
+  .input > input {
+      height: 50px;
+  }
+
+  .button > button {
+      height: 50px;
+  }
+  
+  .rss-form {
+      display: flex;
+      flex-direction: row;
+  }
+
+  .example {
+      margin-top: 10px;
+  }
+
+  .container-fluid{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
