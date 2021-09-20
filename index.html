@@ -20,15 +20,14 @@
                 </div>
                 <form id="rss" class="rss-form text-body">
                     <div class="input">
-                        <input id="url-input" type="text" class="form-control w-100" name="name" placeholder="Ссылка RSS">
+                        <input id="url-input" autofocus required class="form-control w-100" name="url" aria-label="url" placeholder="Ссылка RSS" autocomplete="off">
                     </div>
                     <div class=button>
-                        <button type="button" class="btn btn-primary">Добавить</button>
+                        <button type="submit" aria-label="add" class="btn btn-primary">Добавить</button>
                     </div>
                 </form>
-            <div class="example">
-                <p>Пример: https://ru.hexlet.io/lessons.rss</p>
-            </div>
+                <p class="mt-2 mb-0 text-muted">Пример: https://ru.hexlet.io/lessons.rss</p>
+                <p class="feedback m-0 position-absolute small text-danger"></p>
             </div>
         </div>
     </section>    
