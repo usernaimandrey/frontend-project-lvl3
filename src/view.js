@@ -1,6 +1,6 @@
 import onChange from 'on-change';
 
-const watchedState = (state) => onChange(state, (path, value) => {
+const watchedState = (state, text) => onChange(state, (path, value) => {
   const feedBack = document.querySelector('.feedback');
   const input = document.querySelector('#url-input');
   const form = document.querySelector('#rss');
@@ -10,7 +10,7 @@ const watchedState = (state) => onChange(state, (path, value) => {
         input.classList.remove('is-invalid');
         feedBack.classList.remove('text-danger');
         feedBack.classList.add('text-success');
-        feedBack.textContent = 'RSS успешно загружен';
+        feedBack.textContent = text.t('load.successful');
         form.reset();
         input.focus();
         break;
@@ -18,7 +18,7 @@ const watchedState = (state) => onChange(state, (path, value) => {
         input.classList.add('is-invalid');
         feedBack.classList.add('text-danger');
         feedBack.classList.remove('text-success');
-        feedBack.textContent = state.validationErr;
+        feedBack.textContent = text.t('valid.validError');
         break;
       default:
         throw new Error(`Unknow state ${value}`);

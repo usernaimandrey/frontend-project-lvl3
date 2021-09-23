@@ -1,40 +1,42 @@
-import * as yup from 'yup';
+import i18next from 'i18next';
 import watched from './view.js';
-
-const schema = yup
-  .string()
-  .trim()
-  .required('Ссылка должна быть валидным URL')
-  .url('Ссылка должна быть валидным URL');
+import resources from './locales/index.js';
+import validator from './validator.js';
 
 export default () => {
+  const defaultLng = 'ru';
   const state = {
+    lng: defaultLng,
     fids: [],
     processState: 'filling', // filling, failed, processed
     validationState: '', // invalid valid
-    validationErr: '',
-    networkErr: '',
   };
 
-  const watchedState = watched(state);
+  const i18nextInstance = i18next.createInstance();
+  i18nextInstance.init({
+    lng: defaultLng,
+    debug: false,
+    resources,
+  })
+    .then(() => {
+      const watchedState = watched(state, i18nextInstance);
 
-  const form = document.querySelector('#rss');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const value = formData.get('url');
-    schema.validate(value).then(() => {
-      if (!watchedState.fids.includes(value)) {
-        watchedState.validationErr = '';
-        watchedState.fids.unshift(value);
-        watchedState.validationState = 'valid';
-      } else {
-        watchedState.validationErr = 'Ссылка должна быть валидным URL';
-        watchedState.validationState = 'invalid';
-      }
-    }).catch((error) => {
-      watchedState.validationErr = error.message;
-      watchedState.validationState = 'invalid';
+      const form = document.querySelector('#rss');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const value = formData.get('url');
+        validator(value, i18nextInstance).then(() => {
+          if (!watchedState.fids.includes(value)) {
+            watchedState.fids.unshift(value);
+            watchedState.validationState = 'valid';
+          } else {
+            watchedState.validationState = 'invalid';
+          }
+        }).catch(() => {
+          watchedState.validationState = 'invalid';
+        });
+      });
     });
-  });
 };
