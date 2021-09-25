@@ -1,15 +1,26 @@
 import i18next from 'i18next';
+import axios from 'axios';
 import watched from './view.js';
 import resources from './locales/index.js';
 import validator from './validator.js';
+import parser from './parser.js';
+
+const routes = {
+  getRssPath: (value) => `https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${encodeURIComponent(value)}`,
+};
 
 export default () => {
   const defaultLng = 'ru';
   const state = {
     lng: defaultLng,
+    links: [],
     fids: [],
-    processState: 'filling', // filling, failed, processed
-    validationState: '', // invalid valid
+    posts: [],
+    proces: {
+      processState: 'filling', // filling, failed, processed, successful
+      validationState: '', // invalid valid
+      parsErro: null,
+    },
   };
 
   const i18nextInstance = i18next.createInstance();
@@ -28,14 +39,36 @@ export default () => {
         const formData = new FormData(e.target);
         const value = formData.get('url');
         validator(value, i18nextInstance).then(() => {
-          if (!watchedState.fids.includes(value)) {
-            watchedState.fids.unshift(value);
-            watchedState.validationState = 'valid';
+          if (!watchedState.links.includes(value)) {
+            watchedState.links.push(value);
+            watchedState.proces.validationState = 'valid';
           } else {
-            watchedState.validationState = 'invalid';
+            watchedState.proces.validationState = 'duplication';
           }
         }).catch(() => {
-          watchedState.validationState = 'invalid';
+          watchedState.proces.validationState = 'invalid';
+        }).then(() => {
+          if (watchedState.proces.validationState === 'valid') {
+            watchedState.proces.processState = 'processed';
+            axios.get(routes.getRssPath(value))
+              .then((response) => {
+                watchedState.proces.processState = 'successful';
+                const data = parser(response.data.contents);
+                if (!data) {
+                  watchedState.proces.parsErro = true;
+                } else {
+                  watchedState.proces.parsErro = false;
+                  const { fid, posts } = data;
+                  console.log(fid, posts);
+                  watchedState.fids = [...watchedState.fids, fid];
+                  watchedState.posts = [...watchedState.posts, ...posts];
+                }
+              })
+              .catch(() => {
+                watchedState.links.splice(watchedState.links.length - 1, 1);
+                watchedState.proces.processState = 'failed';
+              });
+          }
         });
       });
     });

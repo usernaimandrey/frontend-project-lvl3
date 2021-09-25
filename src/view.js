@@ -1,27 +1,43 @@
 import onChange from 'on-change';
 
+const renderError = (elementInput, target, text) => {
+  elementInput.classList.add('is-invalid');
+  target.classList.add('text-danger');
+  target.classList.remove('text-success');
+  const textNode = document.createTextNode(text);
+  target.replaceChildren(textNode);
+};
+
 const watchedState = (state, text) => onChange(state, (path, value) => {
   const feedBack = document.querySelector('.feedback');
   const input = document.querySelector('#url-input');
   const form = document.querySelector('#rss');
-  if (path === 'validationState') {
-    switch (value) {
-      case 'valid':
-        input.classList.remove('is-invalid');
-        feedBack.classList.remove('text-danger');
-        feedBack.classList.add('text-success');
-        feedBack.textContent = text.t('load.successful');
-        form.reset();
-        input.focus();
-        break;
-      case 'invalid':
-        input.classList.add('is-invalid');
-        feedBack.classList.add('text-danger');
-        feedBack.classList.remove('text-success');
-        feedBack.textContent = text.t('valid.validError');
-        break;
-      default:
-        throw new Error(`Unknow state ${value}`);
+  if (path === 'proces.validationState') {
+    if (value === 'invalid') {
+      renderError(input, feedBack, text.t('valid.validError'));
+    }
+    if (value === 'duplication') {
+      renderError(input, feedBack, text.t('duplication.error'));
+    }
+  }
+
+  if (path === 'proces.processState') {
+    if (value === 'failed') {
+      renderError(input, feedBack, text.t('load.networkErr'));
+    }
+  }
+
+  if (path === 'proces.parsErro') {
+    if (!value && state.proces.processState === 'successful') {
+      input.classList.remove('is-invalid');
+      feedBack.classList.remove('text-danger');
+      feedBack.classList.add('text-success');
+      const textNode = document.createTextNode(text.t('load.successful'));
+      feedBack.replaceChildren(textNode);
+      form.reset();
+      input.focus();
+    } else {
+      renderError(input, feedBack, text.t('parser.error'));
     }
   }
 });
