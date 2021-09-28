@@ -13,5 +13,12 @@ export default {
     duplication: {
       error: 'RSS уже существует',
     },
+    fids: {
+      fid: 'Фиды',
+    },
+    posts: {
+      post: 'Пост',
+      button: 'Просмотр',
+    },
   },
 };

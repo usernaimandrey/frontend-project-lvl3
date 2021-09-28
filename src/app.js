@@ -52,21 +52,26 @@ export default () => {
             watchedState.proces.processState = 'processed';
             axios.get(routes.getRssPath(value))
               .then((response) => {
-                watchedState.proces.processState = 'successful';
                 const data = parser(response.data.contents);
                 if (!data) {
                   watchedState.proces.parsErro = true;
+                  watchedState.links.splice(watchedState.links.length - 1, 1);
                 } else {
-                  watchedState.proces.parsErro = false;
                   const { fid, posts } = data;
-                  console.log(fid, posts);
-                  watchedState.fids = [...watchedState.fids, fid];
-                  watchedState.posts = [...watchedState.posts, ...posts];
+                  watchedState.fids.unshift(fid);
+                  watchedState.posts.unshift(...posts);
+                  watchedState.proces.processState = 'successful';
+                  watchedState.proces.parsErro = false;
                 }
               })
               .catch(() => {
                 watchedState.links.splice(watchedState.links.length - 1, 1);
                 watchedState.proces.processState = 'failed';
+              })
+              .then(() => {
+                watchedState.proces.parsErro = null;
+                watchedState.proces.processState = 'filling';
+                watchedState.proces.validationState = 'valid';
               });
           }
         });
