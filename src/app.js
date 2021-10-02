@@ -20,6 +20,8 @@ export default () => {
       processState: 'filling', // filling, failed, processed, successful
       validationState: '', // invalid valid
       parsErro: null,
+      update: null, // loading, loaded
+      countCall: 0,
     },
   };
 
@@ -34,13 +36,34 @@ export default () => {
 
       const form = document.querySelector('#rss');
 
+      const updatePosts = () => {
+        watchedState.proces.update = 'loading';
+        setTimeout(() => {
+          const request = (path) => axios.get(routes.getRssPath(path))
+            .then((response) => parser(response.data.contents))
+            .then(({ posts }) => posts);
+          Promise.all(watchedState.links.map((link) => request(link)))
+            .then((data) => {
+              const result = data.flat();
+              watchedState.posts = result;
+              watchedState.proces.update = 'loaded';
+              updatePosts();
+            })
+            .catch((e) => {
+              console.log(e);
+              watchedState.proces.update = 'loading';
+              updatePosts();
+            });
+        }, 5000);
+      };
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const value = formData.get('url');
         validator(value, i18nextInstance).then(() => {
           if (!watchedState.links.includes(value)) {
-            watchedState.links.push(value);
+            watchedState.links.unshift(value);
             watchedState.proces.validationState = 'valid';
           } else {
             watchedState.proces.validationState = 'duplication';
@@ -54,19 +77,29 @@ export default () => {
               .then((response) => {
                 const data = parser(response.data.contents);
                 if (!data) {
-                  watchedState.proces.parsErro = true;
-                  watchedState.links.splice(watchedState.links.length - 1, 1);
+                  throw new Error('parsErro');
                 } else {
                   const { fid, posts } = data;
                   watchedState.fids.unshift(fid);
                   watchedState.posts.unshift(...posts);
                   watchedState.proces.processState = 'successful';
                   watchedState.proces.parsErro = false;
+                  watchedState.proces.update = 'loading';
+                  watchedState.proces.countCall += 1;
+                  if (watchedState.proces.countCall < 2) {
+                    updatePosts();
+                  }
                 }
               })
-              .catch(() => {
-                watchedState.links.splice(watchedState.links.length - 1, 1);
-                watchedState.proces.processState = 'failed';
+              .catch((error) => {
+                const { message } = error;
+                watchedState.links.splice(watchedState.links[0], 1);
+                if (message === 'parsErro') {
+                  watchedState.proces.parsErro = true;
+                }
+                if (message === 'Network Error') {
+                  watchedState.proces.processState = 'failed';
+                }
               })
               .then(() => {
                 watchedState.proces.parsErro = null;

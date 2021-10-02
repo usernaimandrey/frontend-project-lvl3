@@ -15,6 +15,7 @@ const formControl = {
 };
 
 const watchedState = (state, text) => onChange(state, (path, value) => {
+  console.log(value);
   const feedBack = document.querySelector('.feedback');
   const input = document.querySelector('#url-input');
   const form = document.querySelector('#rss');
@@ -33,6 +34,7 @@ const watchedState = (state, text) => onChange(state, (path, value) => {
   if (path === 'proces.processState') {
     switch (value) {
       case 'processed':
+        feedBack.textContent = '';
         formControl.disable(input, button);
         break;
       case 'failed':
@@ -63,6 +65,12 @@ const watchedState = (state, text) => onChange(state, (path, value) => {
       input.focus();
     } else if (value === true) {
       renderError(input, feedBack, text.t('parser.error'));
+    }
+  }
+
+  if (path === 'proces.update') {
+    if (value === 'loaded') {
+      renderPosts(containerPosts, text, state);
     }
   }
 });
