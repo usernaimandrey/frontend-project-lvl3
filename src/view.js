@@ -15,7 +15,6 @@ const formControl = {
 };
 
 const watchedState = (state, text) => onChange(state, (path, value) => {
-  console.log(value);
   const feedBack = document.querySelector('.feedback');
   const input = document.querySelector('#url-input');
   const form = document.querySelector('#rss');

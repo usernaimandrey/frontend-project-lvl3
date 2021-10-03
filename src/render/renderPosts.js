@@ -13,18 +13,21 @@ const renderPosts = (target, text, { posts }) => {
     } = el;
 
     const li = document.createElement('li');
-    li.setAttribute('class', 'list-group-item d-flex flex-row justify-content-between');
-    li.setAttribute('id', postId);
-    li.setAttribute('data-fidId', fidByPostsId);
+    li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-baseline border-0 border-end-0');
 
     const link = document.createElement('a');
-    link.setAttribute('class', 'nav-link');
+    link.setAttribute('id', postId);
+    link.setAttribute('data-fid-Id', fidByPostsId);
+    link.setAttribute('class', 'fw-bold'); // fw-normal link-secondary
     link.setAttribute('href', postLink);
+    link.setAttribute('rel', 'noopener noreferrer');
+    link.setAttribute('target', '_blank');
     link.textContent = postTitle;
 
     const button = document.createElement('button');
-    button.setAttribute('class', 'btn btn-outline-primary');
+    button.setAttribute('class', 'm-3 btn btn-outline-primary btn-sm');
     button.setAttribute('type', 'button');
+    button.setAttribute('id', postId);
     button.textContent = text.t('posts.button');
 
     li.append(link, button);

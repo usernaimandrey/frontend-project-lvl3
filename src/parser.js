@@ -1,5 +1,3 @@
-import uniqueId from 'lodash/uniqueId.js';
-
 const parser = (data) => {
   const pars = new DOMParser();
   const xml = pars.parseFromString(data, 'application/xml');
@@ -7,7 +5,8 @@ const parser = (data) => {
   if (parserErro) {
     return null;
   }
-  const fidId = uniqueId();
+
+  const fidId = xml.querySelector('link').textContent;
   const fidTitle = xml.querySelector('title').textContent.trim();
   const fidDescription = xml.querySelector('description').textContent.trim();
   const fid = { fidId, fidTitle, fidDescription };
@@ -15,7 +14,7 @@ const parser = (data) => {
   const posts = [];
   itemPosts.forEach((post) => {
     const fidByPostsId = fidId;
-    const postId = uniqueId();
+    const postId = post.querySelector('guid').textContent;
     const postTitle = post.querySelector('title').textContent.trim();
     const postDescription = post.querySelector('description').textContent.trim();
     const postLink = post.querySelector('link').textContent.trim();
