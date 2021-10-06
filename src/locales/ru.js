@@ -17,7 +17,7 @@ export default {
       fid: 'Фиды',
     },
     posts: {
-      post: 'Пост',
+      post: 'Посты',
       button: 'Просмотр',
     },
   },

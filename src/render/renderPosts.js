@@ -1,4 +1,5 @@
-const renderPosts = (target, text, { posts }) => {
+const renderPosts = (target, text, state) => {
+  const { posts, readPosts } = state;
   const div = document.createElement('div');
 
   const h3 = document.createElement('h3');
@@ -16,9 +17,10 @@ const renderPosts = (target, text, { posts }) => {
     li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-baseline border-0 border-end-0');
 
     const link = document.createElement('a');
-    link.setAttribute('id', postId);
+    const classAtribute = readPosts.includes(postId) ? 'fw-normal link-secondary' : 'fw-bold';
+    link.setAttribute('data-id', `${postId}`);
     link.setAttribute('data-fid-Id', fidByPostsId);
-    link.setAttribute('class', 'fw-bold'); // fw-normal link-secondary
+    link.setAttribute('class', classAtribute); // fw-normal link-secondary fw-bold
     link.setAttribute('href', postLink);
     link.setAttribute('rel', 'noopener noreferrer');
     link.setAttribute('target', '_blank');
@@ -27,7 +29,9 @@ const renderPosts = (target, text, { posts }) => {
     const button = document.createElement('button');
     button.setAttribute('class', 'm-3 btn btn-outline-primary btn-sm');
     button.setAttribute('type', 'button');
-    button.setAttribute('id', postId);
+    button.setAttribute('data-id', `${postId}`);
+    button.setAttribute('data-bs-toggle', 'modal');
+    button.setAttribute('data-bs-target', '#modal');
     button.textContent = text.t('posts.button');
 
     li.append(link, button);

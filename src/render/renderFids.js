@@ -11,7 +11,7 @@ const renderFids = (target, text, { fids }) => {
     const { fidId, fidTitle, fidDescription } = el;
     const li = document.createElement('li');
     li.setAttribute('class', 'list-group-item');
-    li.setAttribute('id', fidId);
+    li.setAttribute('data-id', fidId);
 
     const h5 = document.createElement('h5');
     h5.textContent = fidTitle;

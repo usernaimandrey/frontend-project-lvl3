@@ -37,6 +37,7 @@
   .rss-form {
       display: flex;
       flex-direction: row;
+      width: 50vw;
   }
 
   .example {

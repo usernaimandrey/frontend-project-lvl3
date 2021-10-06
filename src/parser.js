@@ -6,7 +6,7 @@ const parser = (data) => {
     return null;
   }
 
-  const fidId = xml.querySelector('link').textContent;
+  const fidId = xml.querySelector('link').textContent.trim();
   const fidTitle = xml.querySelector('title').textContent.trim();
   const fidDescription = xml.querySelector('description').textContent.trim();
   const fid = { fidId, fidTitle, fidDescription };
@@ -14,7 +14,7 @@ const parser = (data) => {
   const posts = [];
   itemPosts.forEach((post) => {
     const fidByPostsId = fidId;
-    const postId = post.querySelector('guid').textContent;
+    const postId = post.querySelector('guid').textContent.trim();
     const postTitle = post.querySelector('title').textContent.trim();
     const postDescription = post.querySelector('description').textContent.trim();
     const postLink = post.querySelector('link').textContent.trim();

@@ -1,9 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -30,6 +36,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new SourceMapDevToolPlugin({
+      filename: '[file].map',
+    }),
     new HtmlWebpackPlugin({
       title: 'RSS агрегатор',
       template: 'index.html',

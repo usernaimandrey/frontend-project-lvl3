@@ -1,13 +1,11 @@
 import i18next from 'i18next';
+import _ from 'lodash';
 import axios from 'axios';
 import watched from './view.js';
 import resources from './locales/index.js';
 import validator from './validator.js';
 import parser from './parser.js';
-
-const routes = {
-  getRssPath: (value) => `https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${encodeURIComponent(value)}`,
-};
+import routes from './utils/routes.js';
 
 export default () => {
   const defaultLng = 'ru';
@@ -16,6 +14,15 @@ export default () => {
     links: [],
     fids: [],
     posts: [],
+    readPosts: [],
+    modal: {
+      modalView: 'hidden', // show
+      postPreView: {},
+    },
+    id: {
+      post: 0,
+      fid: 0,
+    },
     proces: {
       processState: 'filling', // filling, failed, processed, successful
       validationState: '', // invalid valid
@@ -35,6 +42,7 @@ export default () => {
       const watchedState = watched(state, i18nextInstance);
 
       const form = document.querySelector('#rss');
+      const postsContainer = document.querySelector('.posts');
 
       const updatePosts = () => {
         watchedState.proces.update = 'loading';
@@ -45,7 +53,8 @@ export default () => {
           Promise.all(watchedState.links.map((link) => request(link)))
             .then((data) => {
               const result = data.flat();
-              watchedState.posts = result;
+              const diff = _.differenceWith(result, watchedState.posts, _.isEqual);
+              watchedState.posts.unshift(...diff);
               watchedState.proces.update = 'loaded';
               updatePosts();
             })
@@ -56,6 +65,20 @@ export default () => {
             });
         }, 5000);
       };
+
+      postsContainer.addEventListener('click', (e) => {
+        const { id } = e.target.dataset;
+        const { type } = e.target;
+        if (id && !watchedState.readPosts.includes(id)) {
+          watchedState.readPosts.push(id);
+        }
+
+        if (type === 'button') {
+          const postPreView = watchedState.posts.find((element) => element.postId === id);
+          watchedState.modal.postPreView = { ...postPreView };
+          watchedState.modal.modalView = 'show';
+        }
+      });
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -82,6 +105,7 @@ export default () => {
                   const { fid, posts } = data;
                   watchedState.fids.unshift(fid);
                   watchedState.posts.unshift(...posts);
+
                   watchedState.proces.processState = 'successful';
                   watchedState.proces.parsErro = false;
                   watchedState.proces.update = 'loading';
