@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "rcc channel aggregator",
-  "main": "src/index.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "jest --colors"
   },
