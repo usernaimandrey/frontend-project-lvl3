@@ -5,7 +5,7 @@ export default {
     },
     load: {
       successful: 'RSS успешно загружен',
-      networkErr: 'Проблемма с сетевым соединением',
+      networkErr: 'Ошибка сети',
     },
     parser: {
       error: 'Ресурс не содержит валидный RSS',
