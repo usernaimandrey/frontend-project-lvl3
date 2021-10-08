@@ -1,17 +1,14 @@
 import onChange from 'on-change';
 import render from './render/index.js';
 import formControl from './utils/formControl.js';
+import elements from './utils/elements.js';
 
 const watchedState = (state, text) => onChange(state, (path, value) => {
-  const feedBack = document.querySelector('.feedback');
-  const input = document.querySelector('#url-input');
-  const form = document.querySelector('#rss');
-  const button = document.querySelector('[aria-label="add"]');
-  const containerPosts = document.querySelector('.posts');
-  const containerFeds = document.querySelector('.fids');
-  const modal = document.querySelector('#modal');
   const {
-    renderFids, renderPosts, renderError, renderModal,
+    feedBack, input, form, button, containerPosts, containerFeds, modal,
+  } = elements;
+  const {
+    renderFids, renderPosts, renderError, renderModal, renderSuccessFeedBack,
   } = render;
   const { disable, enable } = formControl;
 
@@ -47,11 +44,7 @@ const watchedState = (state, text) => onChange(state, (path, value) => {
 
   if (path === 'proces.parsErro') {
     if (value === false && state.proces.processState === 'successful') {
-      input.classList.remove('is-invalid');
-      feedBack.classList.remove('text-danger');
-      feedBack.classList.add('text-success');
-      const textNode = document.createTextNode(text.t('load.successful'));
-      feedBack.replaceChildren(textNode);
+      renderSuccessFeedBack(input, feedBack, text);
       renderFids(containerFeds, text.t('fids.fid'), state);
       renderPosts(containerPosts, text, state);
       form.reset();

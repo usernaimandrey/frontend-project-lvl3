@@ -6,6 +6,7 @@ import resources from './locales/index.js';
 import validator from './validator.js';
 import parser from './parser.js';
 import routes from './utils/routes.js';
+import elements from './utils/elements.js';
 
 export default () => {
   const defaultLng = 'ru';
@@ -40,9 +41,7 @@ export default () => {
   })
     .then(() => {
       const watchedState = watched(state, i18nextInstance);
-
-      const form = document.querySelector('#rss');
-      const postsContainer = document.querySelector('.posts');
+      const { form, containerPosts } = elements;
 
       const updatePosts = () => {
         watchedState.proces.update = 'loading';
@@ -66,7 +65,7 @@ export default () => {
         }, 5000);
       };
 
-      postsContainer.addEventListener('click', (e) => {
+      containerPosts.addEventListener('click', (e) => {
         const { id } = e.target.dataset;
         const { type } = e.target;
         if (id && !watchedState.readPosts.includes(id)) {
@@ -77,6 +76,7 @@ export default () => {
           const postPreView = watchedState.posts.find((element) => element.postId === id);
           watchedState.modal.postPreView = { ...postPreView };
           watchedState.modal.modalView = 'show';
+          watchedState.modal.modalView = 'hidden';
         }
       });
 
