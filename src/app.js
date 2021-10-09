@@ -1,3 +1,4 @@
+import 'bootstrap';
 import i18next from 'i18next';
 import _ from 'lodash';
 import axios from 'axios';
