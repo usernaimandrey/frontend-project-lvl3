@@ -1,10 +1,10 @@
 const formControl = {
   disable: (input, button) => {
-    input.setAttribute('disabled', 'disabled');
-    button.setAttribute('disabled', 'disabled');
+    input.setAttribute('readonly', true);
+    button.setAttribute('disabled', true);
   },
   enable: (input, button) => {
-    input.removeAttribute('disabled');
+    input.removeAttribute('readonly');
     button.removeAttribute('disabled');
   },
 };
