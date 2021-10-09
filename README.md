@@ -6,7 +6,7 @@
 ### Build and linter check
 [![Build and linter check](https://github.com/usernaimandrey/frontend-project-lvl3/actions/workflows/node.js.yml/badge.svg)](https://github.com/usernaimandrey/frontend-project-lvl3/actions/workflows/node.js.yml)
 
-### RSS agregator on Vercel: [Rss agregator](https://frontend-project-lvl3-nbw7cpsww-usernaimandrey.vercel.app/)
+### RSS agregator on Vercel: [Rss agregator](https://frontend-project-lvl3-31kb1od7x-usernaimandrey.vercel.app)
 ### Feeds are updated automatically
 
 ### Useful rss links:
