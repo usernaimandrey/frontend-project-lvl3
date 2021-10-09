@@ -1,12 +1,16 @@
 import onChange from 'on-change';
 import render from './render/index.js';
 import formControl from './utils/formControl.js';
-import elements from './utils/elements.js';
 
 const watchedState = (state, text) => onChange(state, (path, value) => {
-  const {
-    feedBack, input, form, button, containerPosts, containerFeds, modal,
-  } = elements;
+  const feedBack = document.querySelector('.feedback');
+  const input = document.querySelector('#url-input');
+  const form = document.querySelector('#rss');
+  const button = document.querySelector('[aria-label="add"]');
+  const containerPosts = document.querySelector('.posts');
+  const containerFeds = document.querySelector('.fids');
+  const modal = document.querySelector('#modal');
+
   const {
     renderFids, renderPosts, renderError, renderModal, renderSuccessFeedBack,
   } = render;

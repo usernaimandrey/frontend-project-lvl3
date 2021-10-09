@@ -6,42 +6,42 @@ import resources from './locales/index.js';
 import validator from './validator.js';
 import parser from './parser.js';
 import routes from './utils/routes.js';
-import elements from './utils/elements.js';
 
 export default () => {
   const defaultLng = 'ru';
-  const state = {
-    lng: defaultLng,
-    links: [],
-    fids: [],
-    posts: [],
-    readPosts: [],
-    modal: {
-      modalView: 'hidden', // show
-      postPreView: {},
-    },
-    id: {
-      post: 0,
-      fid: 0,
-    },
-    proces: {
-      processState: 'filling', // filling, failed, processed, successful
-      validationState: '', // invalid valid
-      parsErro: null,
-      update: null, // loading, loaded
-      countCall: 0,
-    },
-  };
-
   const i18nextInstance = i18next.createInstance();
-  i18nextInstance.init({
+  return i18nextInstance.init({
     lng: defaultLng,
     debug: false,
     resources,
   })
     .then(() => {
+      const state = {
+        lng: defaultLng,
+        links: [],
+        fids: [],
+        posts: [],
+        readPosts: [],
+        modal: {
+          modalView: 'hidden', // show
+          postPreView: {},
+        },
+        id: {
+          post: 0,
+          fid: 0,
+        },
+        proces: {
+          processState: 'filling', // filling, failed, processed, successful
+          validationState: '', // invalid valid
+          parsErro: null,
+          update: null, // loading, loaded
+          countCall: 0,
+        },
+      };
+
       const watchedState = watched(state, i18nextInstance);
-      const { form, containerPosts } = elements;
+      const form = document.querySelector('#rss');
+      const containerPosts = document.querySelector('.posts');
 
       const updatePosts = () => {
         watchedState.proces.update = 'loading';
