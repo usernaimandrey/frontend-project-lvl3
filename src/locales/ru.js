@@ -1,5 +1,9 @@
 export default {
   translation: {
+    h1: 'RSS агрегатор',
+    content: 'Начните читать RSS сегодня! Это легко, это красиво.',
+    text: 'Пример: https://ru.hexlet.io/lessons.rss',
+    placeholder: 'Ссылка RSS',
     valid: {
       validError: 'Ссылка должна быть валидным URL',
     },
@@ -19,6 +23,11 @@ export default {
     posts: {
       post: 'Посты',
       button: 'Просмотр',
+    },
+    bottonForm: 'Добавить',
+    bottonModal: {
+      primary: 'Читать полностью',
+      secondary: 'Закрыть',
     },
   },
 };

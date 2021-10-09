@@ -33,7 +33,7 @@
   .button > button {
       height: 50px;
   }
-  
+
   .rss-form {
       display: flex;
       flex-direction: row;

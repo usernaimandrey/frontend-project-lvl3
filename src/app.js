@@ -43,6 +43,7 @@ export default () => {
       const watchedState = watched(state, i18nextInstance);
       const form = document.querySelector('#rss');
       const containerPosts = document.querySelector('.posts');
+      const select = document.querySelector('#select');
 
       const updatePosts = () => {
         watchedState.proces.update = 'loading';
@@ -65,6 +66,10 @@ export default () => {
             });
         }, 5000);
       };
+
+      select.addEventListener('change', (e) => {
+        watchedState.lng = e.target.value;
+      });
 
       containerPosts.addEventListener('click', (e) => {
         const { id } = e.target.dataset;

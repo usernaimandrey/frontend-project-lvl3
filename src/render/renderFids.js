@@ -1,6 +1,7 @@
 const renderFids = (target, text, { fids }) => {
   const div = document.createElement('div');
   const h3 = document.createElement('h3');
+  h3.setAttribute('id', 'feads-title');
   h3.textContent = text;
   div.append(h3);
 

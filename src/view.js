@@ -3,6 +3,9 @@ import render from './render/index.js';
 import formControl from './utils/formControl.js';
 
 const watchedState = (state, text) => onChange(state, (path, value) => {
+  const heading = document.querySelector('#heading');
+  const textContent = document.querySelector('#tagline');
+  const example = document.querySelector('#example');
   const feedBack = document.querySelector('.feedback');
   const input = document.querySelector('#url-input');
   const form = document.querySelector('#rss');
@@ -10,11 +13,33 @@ const watchedState = (state, text) => onChange(state, (path, value) => {
   const containerPosts = document.querySelector('.posts');
   const containerFeds = document.querySelector('.fids');
   const modal = document.querySelector('#modal');
+  const modalBtnPrim = modal.querySelector('#primary');
+  const modalBtnSec = modal.querySelector('#secondary');
 
   const {
     renderFids, renderPosts, renderError, renderModal, renderSuccessFeedBack,
   } = render;
   const { disable, enable } = formControl;
+
+  if (path === 'lng') {
+    text
+      .changeLanguage(value)
+      .then((t) => {
+        heading.textContent = t('h1');
+        textContent.textContent = t('content');
+        example.textContent = t('text');
+        button.textContent = t('bottonForm');
+        modalBtnPrim.textContent = t('bottonModal.primary');
+        modalBtnSec.textContent = t('bottonModal.secondary');
+        input.setAttribute('placeholder', t('placeholder'));
+        const postsTitle = document.querySelector('#posts-title');
+        const feadsTitle = document.querySelector('#feads-title');
+        if (postsTitle) {
+          postsTitle.textContent = t('posts.post');
+          feadsTitle.textContent = t('fids.fid');
+        }
+      });
+  }
 
   if (path === 'proces.validationState') {
     if (value === 'invalid') {

@@ -4,6 +4,7 @@ const renderPosts = (target, text, state) => {
 
   const h3 = document.createElement('h3');
   h3.textContent = text.t('posts.post');
+  h3.setAttribute('id', 'posts-title');
 
   const list = document.createElement('ul');
   list.setAttribute('class', 'list-group mt-3');

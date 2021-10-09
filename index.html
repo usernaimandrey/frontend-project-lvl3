@@ -7,6 +7,12 @@
     <title>RSS агрегатор</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
+  <div class="m-0 position-absolute align-self-end">
+    <select id="select" class="form-select text-white bg-dark" aria-label="Default select example">
+      <option value="ru" selected>Русский</option>
+      <option value="en">English</option>
+    </select>
+  </div>
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modal" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -16,8 +22,8 @@
         </div>
         <div class="modal-body"></div>
         <div class="modal-footer">
-            <a class="btn btn-primary full-article" href="#" role="button" target="_blank" rel="noopener noreferrer">Читать полностью </a>
-          <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Закрыть</button>
+            <a id="primary" class="btn btn-primary full-article" href="#" role="button" target="_blank" rel="noopener noreferrer">Читать полностью </a>
+          <button id="secondary" type="button" data-bs-dismiss="modal" class="btn btn-secondary">Закрыть</button>
         </div>
       </div>
     </div>
@@ -27,10 +33,10 @@
         <div class="container-fluid p-4">
             <div class="content">
                 <div class="content-text">
-                    <h1 class="display-3 mb-0">RSS агрегатор</h1>    
+                    <h1 id="heading" class="display-3 mb-0">RSS агрегатор</h1>    
                 </div>
                 <div class="content-text">
-                    <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+                    <p id="tagline" class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
                 </div>
                 <form id="rss" class="rss-form text-body">
                     <div class="input">
@@ -40,7 +46,7 @@
                         <button type="submit" aria-label="add" class="btn btn-primary">Добавить</button>
                     </div>
                 </form>
-                <p class="mt-2 mb-0 text-muted">Пример: https://ru.hexlet.io/lessons.rss</p>
+                <p id="example" class="mt-2 mb-0 text-muted">Пример: https://ru.hexlet.io/lessons.rss</p>
                 <p class="feedback m-0 position-absolute small text-danger"></p>
             </div>
         </div>
